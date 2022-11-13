@@ -8,8 +8,6 @@ function Footer(props) {
                     href="https://github.com/ALsJourney" target={"_blank"} className="hover:underline">ALsJourney</a>. Video by <a
                     href={"https://www.youtube.com/watch?v=TRXdxiot5JM&ab_channel=Bizonacci"}
                     className="hover:underline" target={"_blank"}>Bizonacci</a></span>
-
-
         </footer>
     );
 }
