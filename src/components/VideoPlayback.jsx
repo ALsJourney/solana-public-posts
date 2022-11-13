@@ -1,8 +1,8 @@
 import React from 'react';
 import videoBg from '../assets/he_sold.mp4';
 import Footer from "src/components/Footer.jsx";
-import Typical from 'react-typical';
 import {Button} from "src/components/Button.jsx";
+import TypeWriterEffect from 'react-typewriter-effect';
 
 function VideoPlayback(props) {
     return (
@@ -12,14 +12,20 @@ function VideoPlayback(props) {
                 <source src={videoBg} type="video/mp4"/>
             </video>
             <div className="content">
-                <Typical
-                    steps={["What's on your mind? 🤔", 500]}
-                    loop={Infinity}
-                    wrapper="p"
-                    className={"text-3xl text-white font-bold"}
+                <div className="text-2xl font-bold md:text-3xl lg:text-5xl relative p-5">
+                <TypeWriterEffect
+                    startDelay={100}
+                    cursorColor="white"
+                    multiText={[
+                        "What's on your mind? 🤔",
+                        "Share it with the world!🌍️",
+                    ]}
+                    multiTextDelay={1000}
+                    textSpeed={30}
                 />
-                <p className={"text-2xl"}>Connect your wallet and share your thoughts! 💭</p>
-                <Button/>
+                </div>
+                    <p className={"text-xl  md:text-2xl lg:text-3xl"}>Connect your wallet below ⬇️</p>
+                <Button className={"m-4"}>Connect Wallet</Button>
             </div>
             <Footer/>
         </main>
