@@ -1,32 +1,50 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import videoBg from '../assets/he_sold.mp4';
 import Footer from "src/components/Footer.jsx";
 import {Button} from "src/components/Button.jsx";
 import TypeWriterEffect from 'react-typewriter-effect';
+import {ConnectionProvider, useWallet} from "@solana/wallet-adapter-react";
+import {PhantomWalletName, SolflareWalletName} from "@solana/wallet-adapter-wallets";
+import {useBlog} from "src/context/Blog.jsx";
+import connectIcon from "../assets/wallet.svg";
+import FirstDisplay from "src/components/FirstDisplay.jsx";
+import ConnectedDisplay from "src/components/ConnectedDisplay.jsx";
+import PostList from "src/components/PostList.jsx";
 
 function VideoPlayback(props) {
+    const [connecting, setConnecting] = useState(false)
+    const {connected, select} = useWallet()
+    const {user, posts, initialized, initUser, createPost, showModal, setShowModal,} = useBlog()
+    const [postTitle, setPostTitle] = useState("")
+    const [postContent, setPostContent] = useState("")
+
+
+    const onConnect = () => {
+        setConnecting(true)
+        select(SolflareWalletName)
+    }
+
+    useEffect(() => {
+        if (user) {
+            setConnecting(false)
+        }
+    }, [user])
+
+
     return (
         <main>
             <div className="overlay"></div>
             <video autoPlay={true} loop={true} muted>
                 <source src={videoBg} type="video/mp4"/>
             </video>
-            <div className="content">
-                <div className="text-2xl font-bold md:text-3xl lg:text-5xl relative p-5">
-                <TypeWriterEffect
-                    startDelay={100}
-                    cursorColor="white"
-                    multiText={[
-                        "What's on your mind? 🤔",
-                        "Share it with the world!🌍️",
-                    ]}
-                    multiTextDelay={1000}
-                    textSpeed={30}
-                />
+            {connected ? (
+                <div className={"content"}>
+                    <ConnectedDisplay/>
+                    <PostList/>
                 </div>
-                    <p className={"text-xl  md:text-2xl lg:text-3xl"}>Connect your wallet below ⬇️</p>
-                <Button className={"m-4"}>Connect Wallet</Button>
-            </div>
+            ) : (
+                <FirstDisplay/>
+            )}
             <Footer/>
         </main>
     );

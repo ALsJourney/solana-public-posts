@@ -25,7 +25,9 @@ video {
   mix-blend-mode: overlay;
 }
 
-
+.logoicon{
+  filter: invert(1);
+}
 
 .content {
   position: absolute;
