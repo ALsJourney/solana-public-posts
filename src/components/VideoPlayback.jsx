@@ -42,6 +42,7 @@ function VideoPlayback(props) {
                     <ConnectedDisplay/>
                     <PostList/>
                 </div>
+
             ) : (
                 <FirstDisplay/>
             )}
