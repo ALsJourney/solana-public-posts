@@ -8,7 +8,6 @@ import {
     useState,
     useMemo,
 } from "react";
-import { getAvatarUrl } from "./../functions/getAvatarUrl";
 import { getRandomName } from "./../functions/getRandomName";
 import { findProgramAddressSync } from '@project-serum/anchor/dist/cjs/utils/pubkey'
 import idl from "./../../idl.json";
@@ -78,10 +77,9 @@ export const BlogProvider = ({ children }) => {
                 setTransactionPending(true)
                 const [userPda] = findProgramAddressSync([utf8.encode('user'), publicKey.toBuffer()], program.programId)
                 const name = getRandomName();
-                const avatar = getAvatarUrl(name);
 
                 await program.methods
-                    .initUser(name, avatar)
+                    .initUser(name)
                     .accounts({
                         userAccount: userPda,
                         authority: publicKey,
@@ -115,6 +113,7 @@ export const BlogProvider = ({ children }) => {
                     .rpc()
 
                 setShowModal(false)
+                setPosts([]); // reset posts to force re-fetch
             } catch (error) {
                 console.error(error)
             } finally {
